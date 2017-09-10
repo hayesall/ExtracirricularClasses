@@ -168,3 +168,54 @@ a.class_foo(1)
 A.class_foo(1)
 a.static_foo(1)
 A.static_foo(1)
+
+class DictionaryDemo:
+    '''
+    Two lists are combined to form a single list and elements are clubbed
+    with their respective elements from the other list inside the tuple.
+    Further, to convert the above intoa  dictionary. dict() function is used.'''
+
+    names = ['One', 'Two', 'Three', 'Four', 'Five']
+    numbers = [1, 2, 3, 4, 5]
+    
+    d2 = zip(names, numbers)
+    print(d2)
+    #print(zip.__doc__)
+    
+    a1 = dict(d2)
+    print(a1)
+
+    '''What happens if the key doesn't exist? An error.'''
+    #print(a1['Six'])
+
+    '''Delete elements from a dictionary with the 'del' keyword.'''
+    del a1['Two']
+    print(a1)
+    
+'''
+Exercise 3:
+
+Take two lists, say for example these two:
+a = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+b = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+
+and write a program that returns a list that contains only the elements
+which are contained in both.
+'''
+
+a = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+b = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+
+def inter(lsa, lsb):
+    return list(set(a).intersection(set(b)))
+
+print(inter(a, b))
+
+'''
+Exercise 4:
+'''
+
+'''
+Exercise 5:
+Write a function that takes an ordered list of numbers and another
+'''
