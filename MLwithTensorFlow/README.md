@@ -2,6 +2,8 @@
 
 Saturday, September 23, 2017
 
+Python notebooks are from [sruti-jain/MachineLearningWithTensorflow](https://github.com/sruti-jain/MachineLearningWithTensorflow).
+
 ## Installation Instructions for getting up and running:
 
 1. Install Anaconda 3:
