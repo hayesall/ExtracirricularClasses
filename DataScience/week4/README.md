@@ -22,7 +22,9 @@ Libraries discussed:
 ## Apache Spark
 Presented by Shrinath Parikh
 
-[https://www.linkedin.com/pulse/teach-yourself-apache-spark-guide-nerds-shrinath-parikh](Shrinath Parikh's Spark Tutorial)
+* [https://www.linkedin.com/pulse/teach-yourself-apache-spark-guide-nerds-shrinath-parikh](Shrinath Parikh's Spark Tutorial)
+* [http://spark.apache.org/examples.html](Spark Examples)
+* [https://hortonworks.com/downloads/#sandbox](Hortonworks Sandbox)
 
 * Apache Spark: designed to be general purpose for "Resilient Distributed Datasets."
 * Apache sqoop: tool designed for efficiently transferring bulk data between Apache Hadoop and structured data stores such as relational databases.
@@ -31,7 +33,7 @@ Presented by Shrinath Parikh
 
 MapReduce greatly simplified "big data" analysis on large, unreliable clusters. Bottleneck tends to be in requiring many I/O from disk. Goal of Spark is to keep data in memory for as long as possible to limit the number of disk accesses. Spark is great when you have lots of memory, if you do not have enough to fit your data in memory it will have the same performance as MapReduce.
 
-Scala example for Log Mining:
+## Scala example for Log Mining:
 
 > Load error messages from a log into memory, then interactively search for various patterns.
 
