@@ -29,7 +29,11 @@ Presented by Shrinath Parikh
 
 ### Motivation:
 
-MapReduce greatly simplified "big data" analysis on large, unreliable clusters. Bottleneck tends to be in requiring many I/O from disk. Goal of Spark is to keep data in memory for as long as possible to limit the number of disk accesses.
+MapReduce greatly simplified "big data" analysis on large, unreliable clusters. Bottleneck tends to be in requiring many I/O from disk. Goal of Spark is to keep data in memory for as long as possible to limit the number of disk accesses. Spark is great when you have lots of memory, if you do not have enough to fit your data in memory it will have the same performance as MapReduce.
+
+Scala example for Log Mining:
+
+> Load error messages from a log into memory, then interactively search for various patterns.
 
 ```scala
 lines = spark.textFile("hdfs://...")
@@ -40,3 +44,4 @@ messages.persist()
 messages.filter(_.contains("foo")).count
 messages.filter(_.contains("bar")).count
 ```
+
