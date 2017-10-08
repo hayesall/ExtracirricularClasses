@@ -69,3 +69,20 @@ top_movies = ORDER movie_avg BY avg1 desc;
 
 top_10 = LIMIT top_movies 10;
 ```
+
+We can get into a pig console by typing `pig` (or `pig -x MapReduce` if the previous proves problematic) in the terminal, giving us access to a `grunt>` console. Copy & Paste the commands from above, execute them with `dump`. You can see the type at each step by writing `describe`.
+
+The output of the above script (the 10 least popular movies) should look something like the following:
+
+```PigLatin
+(3382,5.0)
+(3656,5.0)
+(787,5.0)
+(3280,5.0)
+(989,5.0)
+(3172,5.0)
+(3881,5.0)
+(3607,5.0)
+(3233,5.0)
+(1830,5.0)
+```
