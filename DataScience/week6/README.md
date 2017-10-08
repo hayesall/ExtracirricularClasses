@@ -93,7 +93,9 @@ The output of the above script (the 10 least popular movies) should look somethi
 
 Spark is a framework with four language integrations (Java, Scala, Python, R). We will use Python and Scala for our hands-on practice, with [Zeppelin](zeppelin.apache.org) as a notebook platform for documentation. Every time a job is submitted in Spark, it negotiates for resources in order to process the job.
 
-```pyspark
+For more examples, [refer to the documentation](https://spark.apache.org/docs/2.1.0/sql-programming-guide.html).
+
+```python
 %livy.pyspark
 fruits = spark.sparkContext.textFile('/example/data/fruits.txt')
 yellowThings = spark.sparkContext.textFile('example/data/yellowthings.txt')
@@ -104,7 +106,7 @@ yellowThings = spark.sparkContext.textFile('example/data/yellowthings.txt')
 hdfs dfs -cat /example/data/fruits.txt | head -n 5
 ```
 
-```pyspark
+```python
 %livy.pyspark
 
 # Let's write our first map function on zeppelin using spark!
@@ -120,4 +122,26 @@ fruitsAndYellowThings = fruits.intersection(yellowThings)
 display = fruitsAndYellowThings.collect()
 print(display)
 # [u'lemon', u'canary melon', u'banana', u'pineapple']
+```
+
+```python
+%livy.pyspark
+from pyspark.sql.types import *
+import csv
+from StringIO import StringIO
+def csv_values_in_line(line):
+    sio = StringIO(line)
+    value = csv.reader(sio).next()
+    sio.close()
+    return value
+
+buildings = buildings = spark.sparkContext.textFile('/HdiSamples/HdiSamples/SensorSampleData/building/building.csv').map(csv_values_in_line).filter(lambda r: r[0] != 'BuildingID').map(lambda r: (int(r[0]), r[1], int(r[2]), r[3], r[4]))
+schema = StructType([StructField('BuildingID', IntegerType(), True),
+                     StructField('BuildingMgr', StringType(), True),
+		     StructField('BuildingAge', IntegerType(), True),
+		     StructField('HVACProduct', StringType(), True),
+		     StructField('Country', StringType(), True)])
+df = spark.createDataFrame(buildings, schema)
+df.show()
+df.printSchema()
 ```
