@@ -1,4 +1,6 @@
-# Week 6:
+# Week 6: PigLatin and Spark
+
+## hdfs on Azure
 
 Azure provides a "managed Hadoop service." Hadoop is not a single tool, rather it is the combination of many tools that are all part of the Hadoop ecosystem. We will work with a 10-node server today (2 8-core head nodes and 4 16-core worker nodes).
 
@@ -85,4 +87,37 @@ The output of the above script (the 10 least popular movies) should look somethi
 (3607,5.0)
 (3233,5.0)
 (1830,5.0)
+```
+
+## Spark
+
+Spark is a framework with four language integrations (Java, Scala, Python, R). We will use Python and Scala for our hands-on practice, with [Zeppelin](zeppelin.apache.org) as a notebook platform for documentation. Every time a job is submitted in Spark, it negotiates for resources in order to process the job.
+
+```pyspark
+%livy.pyspark
+fruits = spark.sparkContext.textFile('/example/data/fruits.txt')
+yellowThings = spark.sparkContext.textFile('example/data/yellowthings.txt')
+```
+
+```sh
+%sh
+hdfs dfs -cat /example/data/fruits.txt | head -n 5
+```
+
+```pyspark
+%livy.pyspark
+
+# Let's write our first map function on zeppelin using spark!
+fruitsReversed = fruits.map(lambda fruit: fruit[::-1])
+
+# Now we can write our filter function!
+shortFruits = fruits.filter(lambda fruit: len(fruit) <= 5)
+
+# Intersection of the two files:
+fruitsAndYellowThings = fruits.intersection(yellowThings)
+
+# It would be useful to see these as we go:
+display = fruitsAndYellowThings.collect()
+print(display)
+# [u'lemon', u'canary melon', u'banana', u'pineapple']
 ```
