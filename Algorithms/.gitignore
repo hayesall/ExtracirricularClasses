@@ -1,0 +1,8 @@
+# Editor Settings
+*~
+.idea
+
+# Compiled
+/target
+**/*.rs.bk
+
