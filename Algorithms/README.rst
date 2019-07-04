@@ -21,6 +21,9 @@ License
 
 MIT License
 
-.. [1]_ Cormen, Thomas H., Leiserson, Charles E., Rivest, Ronald L.,
+References
+==========
+
+.. [1] : Cormen, Thomas H., Leiserson, Charles E., Rivest, Ronald L.,
    Stein, Clifford. "Dynamic Programming." In *Introduction to Algorithms*,
-   3rd Edition.
+   3rd Edition. MIT Press. 2009.
