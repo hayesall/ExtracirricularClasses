@@ -1,14 +1,17 @@
 # Think Julia: How to Think Like a Computer Scientist
 
+Implementations from the "*Think Julia*" book.
+
 > Ben Lauwens & Allen Downey, "Think Julia: How to Think Like a Computer Scientist." O'Reilly Media Inc, 978-1-492-04503-8.
 
-Implementations from the "*Think Julia*" book.
+- Read online: https://benlauwens.github.io/ThinkJulia.jl/latest/book.html
+- Repository accompanying book: https://github.com/BenLauwens/ThinkJulia.jl
 
 ## Table of Contents
 
 1. [The Way of the Program](01-the-way-of-the-program/)
 2. [Variables, Expressions, and Statements](02-variables-expressions-and-statements/)
-3. Functions
+3. [Functions](03-functions/)
 4. Case Study: Interface Design
 5. Conditionals and Recursion
 6. Fruitful Functions

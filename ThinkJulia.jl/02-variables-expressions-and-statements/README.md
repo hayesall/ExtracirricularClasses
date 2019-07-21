@@ -1,4 +1,4 @@
-# Chapter 2: Variables, Expressions, and Statements
+# [Chapter 2: Variables, Expressions, and Statements](https://benlauwens.github.io/ThinkJulia.jl/latest/book.html#chap02)
 
 ## Exercises
 
