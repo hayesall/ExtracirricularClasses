@@ -1,0 +1,32 @@
+# Copyright © 2019 Alexander L. Hayes
+
+title: Semantic Web
+email: hayesall@iu.edu
+description: >-
+  This is a Jekyll file for doing some experiments with Semantic Web data.
+baseurl: ""
+url: ""
+twitter_username: alexanderlhayes
+github_username:  hayesall
+
+owner:
+  name: Alexander L. Hayes
+  email: hayesall@iu.edu
+  twitter: alexanderlhayes
+  github: hayesall
+
+sass:
+  sass_dir: _sass
+  style: compressed
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+include:
+  - _pages
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - Gemfile
+  - Gemfile.lock
+  - vendor

@@ -1,0 +1,16 @@
+{% comment %}
+# Copyright © 2019 Alexander L. Hayes
+
+See: https://schema.org/Person
+
+Required Arguments:
+  - givenName
+  - familyName
+
+Optional Arguments:
+  - additionalName
+{% endcomment %}
+
+<div itemscope itemtype="http://schema.org/Person">
+  <p>Name: <span itemprop="givenName">{{ include.givenName }}</span> <span itemprop="additionalName">{{ include.additionalName }}</span> <span itemprop="familyName">{{ include.familyName }}</span></p>
+</div>
