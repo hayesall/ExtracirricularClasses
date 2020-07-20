@@ -1,0 +1,7 @@
+*.so
+*/target
+**/*.rs.bk
+
+__pycache__
+.benchmarks
+.pytest_cache

@@ -1,0 +1,16 @@
+[package]
+name = "cpython_myrustlib"
+version = "0.1.0"
+authors = ["Alexander L. Hayes <alexander@batflyer.net>"]
+edition = "2018"
+
+[lib]
+name = "cpython_myrustlib"
+crate-type = ["dylib"]
+
+[dependencies.cpython]
+version = "0.1"
+features = ["extension-module"]
+
+[dependencies]
+rayon = "1.1"

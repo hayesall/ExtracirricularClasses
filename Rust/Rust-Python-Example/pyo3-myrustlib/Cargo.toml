@@ -1,0 +1,16 @@
+[package]
+name = "pyo3_myrustlib"
+version = "0.1.0"
+authors = ["Alexander L. Hayes <alexander@batflyer.net>"]
+edition = "2018"
+
+[lib]
+name = "pyo3_myrustlib"
+crate-type = ["cdylib"]
+
+[dependencies.pyo3]
+version = "0.11.1"
+features = ["extension-module"]
+
+[dependencies]
+rayon = "1.1"
