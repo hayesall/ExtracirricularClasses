@@ -31,7 +31,10 @@ def count_double_regex(val):
 
 
 # Solution:
-val = "".join(random.choice(string.ascii_letters) for i in range(10000000))
+# Originally this used a Python generator, but generating a string of length
+# 10000000 turned out to be the bottleneck in the code!
+# val = "".join(random.choice(string.ascii_letters) for i in range(10000000))
+val = pyo3_myrustlib.random_string(10000000)
 _ANSWER = count_double_regex(val)
 
 

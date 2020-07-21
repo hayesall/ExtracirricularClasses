@@ -14,3 +14,4 @@ features = ["extension-module"]
 
 [dependencies]
 rayon = "1.1"
+rand = "*"
