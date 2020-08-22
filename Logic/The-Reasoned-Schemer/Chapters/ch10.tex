@@ -1,0 +1,96 @@
+\documentclass[letterpaper]{article}
+\usepackage{slatex}
+\begin{document}
+
+\title{Chapter 10}
+
+\author{(Typeset by Alexander L. Hayes)}
+
+\maketitle
+
+Now it is time to understand the core of $\equiv$, $\mathbf{fresh}$, $\mathbf{cond}^{e}$,
+$\mathbf{run}$, $\mathbf{run^{*}}$, and $\mathbf{defrel}$.
+
+Of course, we show the core of $\mathbf{conda}^{a}$ and $\mathbf{conda}^{u}$ as well.
+
+Let's begin with $\equiv$. The definition of $\equiv$ relies on \textit{unify}, which
+we shall discuss soon. But we'll need a few new ideas first.
+
+\hrulefill
+
+Here is how we create a unique\footnote{
+  \textit{vector} creates a vector, a datatype distinct
+  from pairs, strings, characters, numbers, Booleans, symbols, and \scheme'()'. Each use of
+  \textit{var} creates a new one-element vector representing a unique variable. We ignore the
+  vector's contents, instead distinguishing vectors by their address in memory. We could instead
+  distinguish variables by their value, provided we ensure their values are unique (for example,
+  using a unique natural number in each variable).
+}
+variable.
+
+\begin{schemedisplay}
+  (define (var name) (vector name))
+\end{schemedisplay}
+
+And here is a simple definition of \textit{var?}.
+
+\begin{schemedisplay}
+  (define (var? x) (vector? x))
+\end{schemedisplay}
+
+\hrulefill
+
+We create three variables $u$, $v$, and $w$.
+
+\begin{schemedisplay}
+  (define u (var 'u))
+  (define v (var 'v))
+  (define w (var 'w))
+\end{schemedisplay}
+
+And here are the variables $x$, $y$, and $z$.
+
+\begin{schemedisplay}
+  (define x (var 'x))
+  (define y (var 'y))
+  (define z (var 'z))
+\end{schemedisplay}
+
+The pair \scheme{`(,z . a)} is an \textbf{association} of \scheme'a' with the variable
+$z$.
+
+A pair is an \textit{association} when the \textit{car} of that pair is a variable.
+The \textit{cdr} of an association may itself be a variable or a value that contains
+zero or more variables.
+
+\begin{schemedisplay}
+  (cdr `(,z . b))
+  ; b.
+
+  (cdr `(,z . (,x e ,y)))
+  ; `(,x e ,y)
+\end{schemedisplay}
+
+The list \scheme{`((,z . oat) (,x . nut))} is a \textbf{substitution}.
+
+What is a \textit{substitution}?
+
+A \textit{substitution}\footnote{
+  These substitutions are known as \textit{triangular} substitutions. For more on these
+  substitutions see Franz Baader and Wayne Snyder. ``Unification theory,'' Chapter 8
+  of \textit{Handbook of Automated Reasoning}, edited by John Alan Robinson and Andrei
+  Voronkov. Elsevier Science and MIT Press, 2001.
+} is a special kind of list of associations. In the substitution \scheme{`((,x . ,z))},
+what does the substitution \scheme{`(,x . ,z)} represent?
+
+In a substitution, an association whose \textit{cdr} is also a variable represents the
+fusing of that association's two variables.
+
+Here is \textit{empty-s}: the substitution that contains no associations:
+
+\begin{schemedisplay}
+  (define empty-s '())
+\end{schemedisplay}
+  
+
+\end{document}

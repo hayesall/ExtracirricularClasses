@@ -1,0 +1,8 @@
+*~
+
+# slatex files
+.Z*.tex
+*.aux
+*.pdf
+*.dvi
+*.log
