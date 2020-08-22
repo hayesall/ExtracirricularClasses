@@ -91,6 +91,21 @@ Here is \textit{empty-s}: the substitution that contains no associations:
 \begin{schemedisplay}
   (define empty-s '())
 \end{schemedisplay}
-  
+
+What is \textit{empty-s}? It's the substitution that contains no associations.
+
+Is \scheme{`((,z . a) (,x . ,w) (,z . b))} a substitution? Not here, since our
+substitution cannot contain two or more associations with the same \textit{car}.
+
+What is the value of the following?
+
+\begin{schemedisplay}
+  (walk z
+    `((,z . a) (,x . ,w) (,y . ,z)))
+\end{schemedisplay}
+
+\scheme'a', because we look up $z$ in the substitution (\textit{walk}'s second
+argument) to find its association, \scheme{`(,z . a)}, and \textit{walk} produces
+this association's \textit{cdr}, \scheme'a', since $a$ is not a variable.
 
 \end{document}
