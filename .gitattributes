@@ -1,2 +1,4 @@
+DataScience/* linguist-vendored=true
 MLwithTensorFlow/* linguist-vendored=true
+MITx6.00.1x/* linguist-vendored=true
 *.ipynb linguist-vendored=true
