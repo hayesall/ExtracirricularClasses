@@ -5,14 +5,15 @@ This mostly comes out of discussion with Dan Friedman.
 ## Books or References
 
 - The Reasoned Schemer
+  - See also: [The Second Edition Repository](https://github.com/TheReasonedSchemer2ndEd/CodeFromTheReasonedSchemer2ndEd)
 - A Note on Inductive Generalization
 
 ## Getting Started
 
-Currently this repository assumes a [Racket](https://racket-lang.org/) development 
+Currently this repository assumes a [Racket](https://racket-lang.org/) development
 environment is available.
 
-Currently (2020-08-22), the `racket/bin` directory is not automatically appended 
+Currently (2020-08-22), the `racket/bin` directory is not automatically appended
 to your path, so add something like the following to your `.bashrc`:
 
 ```bash
@@ -49,7 +50,7 @@ However, running `pdflatex` in hopes of producing a `.pdf` will likely raise an 
 ! LaTeX Error: File `slatex.sty' not found.
 ```
 
-The `slatex` binary is installed alongside Racket. Your `pdflatex` either needs to be 
+The `slatex` binary is installed alongside Racket. Your `pdflatex` either needs to be
 told about the `slatex.sty` file, or you need to build your `.pdf` the manual way.
 
 On my machine, `slatex.sty` was installed here:
@@ -70,5 +71,5 @@ dvipdfm test.dvi
 - [SLaTeX Wrapper (in Racket docs)](https://docs.racket-lang.org/slatex-wrap/index.html)
 - [GitHub /racket/slatex](https://github.com/racket/slatex)
 
-I picked up some notes on formatting from 
+I picked up some notes on formatting from
 [Sam's test cases](https://github.com/racket/slatex/blob/master/tests/slatex/test.rkt).

@@ -1,7 +1,7 @@
 ; Copyright 2020 Alexander L. Hayes
 ; MIT License
 
-#lang racket
+; #lang racket
 
 (define (var name) (vector name))
 (define (var? x) (vector? x))
@@ -54,13 +54,11 @@
     (let ((s (unify u v s)))
       (if s `(,s) '()))))
 
-(define oct-s
-  ; This is ``#s`` in the book
+(define succeed
   (λ (s)
     `(,s)))
 
-(define oct-u
-  ; This is ``#u`` in the book
+(define fail
   (λ (s)
     '()))
 
@@ -100,7 +98,7 @@
 (define (alwayso)
   (λ (s)
     (λ ()
-      ((disj_2 oct-s (alwayso)) s))))
+      ((disj_2 succeed (alwayso)) s))))
 
 (define (take_inf n s_inf)
   (cond
@@ -194,13 +192,13 @@
 ;;; ## Macros from p. 177
 (define-syntax disj
   (syntax-rules ()
-    ((disj) oct-u)
+    ((disj) fail)
     ((disj g) g)
     ((disj g0 g ...) (disj_2 g0 (disj g ...)))))
 
 (define-syntax conj
   (syntax-rules ()
-    ((conj) oct-s)
+    ((conj) succeed)
     ((conj g) g)
     ((conj g0 g ...) (conj_2 g0 (conj g ...)))))
 
@@ -242,8 +240,10 @@
      (disj (conj g ...) ...))))
 
 ; Variables
-
 (define empty-s '())
+#|
+
+
 
 (define u (var 'u))
 (define v (var 'v))
@@ -252,6 +252,8 @@
 (define x (var 'x))
 (define y (var 'y))
 (define z (var 'z))
+
+|#
 
 ; Associations:
 ; (cdr `(,z . b))
@@ -265,11 +267,12 @@
       `((,x . b) (,z . ,y) (,w . (,x e ,z))))
 |#
 
+#|
+
 ((equiv #t #f) empty-s)
-(oct-u empty-s)
+(fail empty-s)
 ((equiv x y) empty-s)
 
-;
 (take_inf 3 ((alwayso) empty-s))
 
 ;; What is the value of this?
@@ -279,7 +282,6 @@
                      empty-s)))))
   `(Found ,k not 5 substitutions))
 
-;;
 (take_inf 1
           ((call/fresh 'kiwi
                        (λ (fruit)
@@ -287,14 +289,12 @@
            empty-s))
 
 
-;;
 (let ((a1 `(,x . (,u ,w ,y ,z ((ice) ,z))))
       (a2 `(,y . corn))
       (a3 `(,w . (,v ,u))))
   (let ((s `(,a1 ,a2 ,a3)))
     ((reify x) s)))
 
-;;
 (map (reify x)
      (take_inf 5
                ((disj_2 (equiv 'olive x) (equiv 'oil x))
@@ -303,3 +303,4 @@
 (map (reify x)
      (run-goal 5
                (disj_2 (equiv 'olive x) (equiv 'oil x))))
+|#
