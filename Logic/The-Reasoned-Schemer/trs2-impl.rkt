@@ -31,6 +31,22 @@
 ; Definitions are presented in the order in which they appear in
 ; Chapter 10 and Appendix A.
 
+
+#lang racket
+
+(provide var
+         var?
+         ==
+         succeed
+         fail
+         run
+         run*
+         fresh
+         conde
+         conda
+         condu
+         )
+
 (define var (λ (x) (vector x)))
 (define var? (λ (x) (vector? x)))
 
