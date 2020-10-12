@@ -38,7 +38,7 @@ Theorem 1
 Every non-empty, finite set of words has a least generalization
 ⇔ any two words in the set are compatible.
 
-Let W₁, W₂ be any two compatible words.
+vLet W₁, W₂ be any two compatible words.
 
 1. Set Vᵢ to Wᵢ(i=1,2).
    Set εᵢ to ε (i=1,2).
@@ -80,60 +80,95 @@ Bibliography
 (define display-word
   (λ (w)
     (match w
-      [`(Literal ,f ,a)
+      
+      [`(Literal ,L ,a)
+       (string-append L "(" (display-word a) ")")]
+      [`(Function ,f ,a)
        (string-append f "(" (display-word a) ")")]
-      [`(Term ,f ,a)
-       (string-append f "(" (display-word a) ")")]
-      [`(Term ,f)
-       f]
-      [`(Variable ,z)
-       ; Variables as numbers?
-       ; TODO(hayesall): There might be a `reify` analogy here.
-       (string-append "_" z)]
-      [(cons a '())
-       (string-append (display-word a))]
+      [`(Variable ,z) z]
       [(cons a b)
-       (string-append (display-word a) ", " (display-word b))]
+       (cond
+         [(null? b) (display-word a)]
+         [else (string-append (display-word a) ", " (display-word b))])]
       ['() ""]
+      [_ (error "ohno" w)]
       )))
 
 ; P(f(a(), g(y)), x, g(y))
 (define W₁
-  '(Literal "P" ((Term "f"
-                       ((Term "a" ())
-                        (Term "g" (Term "y"))))
-                 (Term "x")
-                 (Term "g" (Term "y"))
+  '(Literal "P" ((Function "f"
+                           ((Function "a" ())
+                            (Function "g" (Variable "y"))))
+                 (Variable "x")
+                 (Function "g" (Variable "y"))
                  )))
 
 ; P(h(a(), g(x)), x, g(x))
 (define W₂
-  '(Literal "P" ((Term "h"
-                       ((Term "a" ())
-                        (Term "g" (Term "x"))))
-                 (Term "x")
-                 (Term "g" (Term "x"))
+  '(Literal "P" ((Function "h"
+                           ((Function "a" ())
+                            (Function "g" (Variable "x"))))
+                 (Variable "x")
+                 (Function "g" (Variable "x"))
                  )))
-#;
-(define W₃
-  '(Literal "P" ((Term "h"
-                       ((Term "a" ())
-                        (Term "g" (Variable "z"))))
-                 (Term "x")
-                 (Term "g" (Variable "z")))))
 
-#;
-(define W₄
-  '(Literal "P" ((Variable "y") (Term "x") (Term "g" (Variable "z")))))
+(define antiunify
+  (λ (V₁ V₂ ε₁ ε₂ V₀)
+    (cond
+      ; If V₁ equals V₂, they have been generalized.
+      ; TODO(hayesall): Return one and their substitutions?
+      [(equal? V₁ V₂) V₁]
+      
+      [(and
+        (equal? (car V₁) (car V₂))
+        (not (equal? (cadr V₁) (cadr V₂)))
+        (equal? (caddr V₁) (caddr V₂)))
+       
+       (antiunify (caaddr V₁) (caaddr V₂) ε₁ ε₂ (add1 V₀))]
+      ; Rule 1: Do two terms equal one another?
+      
+      ; Rule 2: Do two function names equal one another?
+      [else (error "No choices")]
+      )))
 
-(define W₅
-  '(Term "f" ((Term "a" ()) (Term "g" (Variable "z")))))
-(define W₆
-  '(Term "h" ((Term "a" ()) (Term "g" (Variable "z")))))
+(define substitute
+  (λ (W ε₀ εₙ)
+    ; W - a word
+    ; ε₀ - Original symbol
+    ; εₙ - Symbol to replace ε₀ with
+    (match W
+      [`(Literal ,symbol ,body)
+       `(Literal ,symbol ,(substitute body ε₀ εₙ))]
+      [`(Function ,f ,body)
+       (cond
+         [(equal? ε₀ `(Function ,f ,body)) εₙ]
+         [else `(Function ,f ,(substitute body ε₀ εₙ))])]
+      [`(Variable ,x)
+       (cond
+        [(equal? ε₀ `(Variable ,x)) εₙ]
+        [else `(Variable ,x)])]
+      [(cons a b)
+       (cons (substitute a ε₀ εₙ) (substitute b ε₀ εₙ))]
+      ['() '()]
+      [_ (error "bad data") W]
+      )))
 
+(define W₀
+  '(Literal "P"
+            (
+             (Function "f" ((Variable "x₀") (Variable "x₁") (Variable "x₂")))
+             (Function "a" (Function "f" ()))
+             (Function "b" ((Function "f" ()) (Function "f" ())))
+             )))
+
+(display-word W₀)
 
 (display-word W₁)
-(display-word W₂)
+(display-word (substitute W₁ '(Variable "y") '(Variable "z")))
 
-(display-word W₅)
-(display-word W₆)
+(display-word
+ (substitute
+  (substitute W₁ '(Variable "y") '(Variable "z"))
+  '(Function "f" ((Function "a" ()) (Function "g" (Variable "z"))))
+  '(Variable "m"))
+ )
