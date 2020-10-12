@@ -77,6 +77,8 @@ Bibliography
 (provide display-word
          antiunify
          find-term
+         cleanup
+         substitute
          )
 
 ; TODO(hayesall): `compatible?` function that checks two words
@@ -131,7 +133,7 @@ Bibliography
     [`(Function ,symbol ,body)
       (cond
 
-        ; If the symbosl are unequal, but the bodies are equal:
+        ; If the symbols are unequal, but the bodies are equal:
         [(and
           (not (equal? symbol (cadr V₁)))
           (equal? body (caddr V₁)))
@@ -153,7 +155,7 @@ Bibliography
     [_ (error "bad data" V₀ V₁)]
     ))
 
-(trace-define (cleanup ls)
+(define (cleanup ls)
   (cond
     [(null? ls) '()]
     [(null? (car ls)) (cleanup (cdr ls))]
@@ -182,6 +184,8 @@ Bibliography
                   (substitute V₁ subst₁ `(Variable ,η))
                   (substitute V₂ subst₂ `(Variable ,η))
                   (add1 η))]
+
+              [_ (error "Error-antiunify\n" V₁ "\n" V₂ "\n" subst₁)]
               ))]))
 
 (define (antiunify V₁ V₂)
