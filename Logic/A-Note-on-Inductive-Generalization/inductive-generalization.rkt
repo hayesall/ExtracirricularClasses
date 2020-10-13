@@ -167,26 +167,14 @@ Bibliography
   (cond
     [(equal? V₁ V₂) V₁]
     [else
-      (let* ([subst₁ (caar  (cleanup (find-term V₁ V₂)))]
-             [subst₂ (cadar (cleanup (find-term V₁ V₂)))])
+      (let* ([subst  (cleanup (find-term V₁ V₂))]
+             [subst₁ (caar  subst)]
+             [subst₂ (cadar subst)])
 
-            (match subst₁
-              ; Replace a Function with a Variable
-              [`(Function ,f ,args)
-                (antiunify-helper
-                  (substitute V₁ subst₁ `(Variable ,η))
-                  (substitute V₂ subst₂ `(Variable ,η))
-                  (add1 η)
-                )]
-              ; Replace a Variable with a Variable
-              [`(Variable ,x)
-                (antiunify-helper
-                  (substitute V₁ subst₁ `(Variable ,η))
-                  (substitute V₂ subst₂ `(Variable ,η))
-                  (add1 η))]
-
-              [_ (error "Error-antiunify\n" V₁ "\n" V₂ "\n" subst₁)]
-              ))]))
+             (antiunify-helper
+               (substitute V₁ subst₁ `(Variable ,η))
+               (substitute V₂ subst₂ `(Variable ,η))
+               (add1 η)))]))
 
 (define (antiunify V₁ V₂)
   (antiunify-helper V₁ V₂ 0))
