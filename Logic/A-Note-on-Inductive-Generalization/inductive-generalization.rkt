@@ -74,36 +74,55 @@ Bibliography
 
 #lang racket
 
-(provide display-word
+(provide word→string
+         print-word
          antiunify
-         find-term
-         cleanup
-         substitute
          )
 
 ; TODO(hayesall): `compatible?` function that checks two words
 ; TODO(hayesall): Substitutions are managed differently than how they are in `mk.rkt`
-; TODO(hayesall): The "cleanup" function exists because the `find-terms` function needs re-thinking.
+; TODO(hayesall): Handle negations ¬P
+;   If you wrap a ¬ around the P, does that make P a term?
+;     V₁ = P(f(a))
+;     V₂ = ¬P(f(a))
 
-(define (display-word w)
-  (match w
-    [`(Literal ,L ,a)
-     (string-append L "(" (display-word a) ")")]
+; Now that you understand this, you should be able to write a miniKanren
+; interpreter by naming the different kinds of variables.
+;
+; TODOs:
+; 1. (let*) is on the list of things to avoid
+; 2. Writing as an interpreter (let macros handle your parsing)
+; 3. Writing a miniKanren interpreter will allow you to write a program that
+;    always finds the most general solution to a problem.
+;
+; Side Note: "An interpreter is a function you dispatch over other code."
+;   e.g. a CPS-er is an interpreter (the left hand side doesn't change,
+;        but the right hand side does).
+;   "CPS in Little Pieces: Composing Partial Continuations"
+;        Γ is a typed environment?
+;        "If you do certain things, you can generate the CPS-ed code every
+;        time using correctness-preserving-transformations in any order
+;        you wish."
+
+(define (print-word w)
+  (printf "~a\n" (word→string w)))
+
+(define (word→string W)
+  (match W
+    [`(Literal ,L ,a) (string-append L "(" (word→string a) ")")]
     [`(Function ,f ,a)
-      (cond
-        [(string? f) (string-append f "(" (display-word a) ")")]
-        [else (string-append "_" (number->string f) "(" (display-word a) ")")])]
+      (if (string? f)
+          (string-append f "(" (word→string a) ")")
+          (string-append "_" (number->string f) "(" (word→string a) ")"))]
     [`(Variable ,z)
-      (cond
-        [(string? z) z]
-        [else (string-append "_" (number->string z))])]
+      (if (string? z)
+          z
+          (string-append "_" (number->string z)))]
     [(cons a b)
-     (cond
-       [(null? b) (display-word a)]
-       [else (string-append (display-word a) ", " (display-word b))])]
-    ['() ""]
-    [_ (error "ohno" w)]
-    ))
+     (if (null? b)
+         (word→string a)
+         (string-append (word→string a) ", " (word→string b)))]
+    ['() ""]))
 
 (define (substitute W ε₀ εₙ)
   (match W
@@ -119,55 +138,28 @@ Bibliography
       [else `(Variable ,x)])]
     [(cons a b)
      (cons (substitute a ε₀ εₙ) (substitute b ε₀ εₙ))]
-    ['() '()]
-    [_ (error "bad data") W]
-    ))
+    ['() '()]))
 
-(require racket/trace)
-(define (find-term V₀ V₁)
-  ; We can match V₀ because the two words are *compatible.*
-  ; TODO(hayesall): This finds **all** possible terms. Make Lazy?
-  (match V₀
-    [`(Literal ,symbol ,body)
-      (find-term body (caddr V₁))]
-    [`(Function ,symbol ,body)
-      (cond
-
-        ; If the symbols are unequal, but the bodies are equal:
-        [(and
-          (not (equal? symbol (cadr V₁)))
-          (equal? body (caddr V₁)))
-          `((Function ,symbol ,body) (Function ,(cadr V₁) ,(caddr V₁)))]
-
-          ; Otherwise, look for matching terms in the bodies.
-        [else (find-term body (caddr V₁))]
-        )]
-    [`(Variable ,symbol)
-      ; The only case we care about is when two variables have different names.
-      (cond
-        [(not (equal? symbol (cadr V₁)))
-          `((Variable ,symbol) (Variable ,(cadr V₁)))]
-        [else '()]
-        )]
-    [(cons a b)
-      (cons (find-term a (car V₁)) (find-term b (cdr V₁)))]
-    ['() '()]
-    [_ (error "bad data" V₀ V₁)]
-    ))
-
-(define (cleanup ls)
-  (cond
-    [(null? ls) '()]
-    [(null? (car ls)) (cleanup (cdr ls))]
-    [(member '() (car ls)) (cleanup (cdr ls))]
-    [else (cons (car ls) (cleanup (cdr ls)))]))
-
+(define (find-terms W₁ W₂)
+  (match W₁
+    [`(Literal  ,x ,body) (find-terms body (caddr W₂))]
+    [`(Function ,f ,body)
+      (if [and (not (equal? f (cadr W₂))) (equal? body (caddr W₂))]
+          `(((Function ,f ,body) (Function ,(cadr W₂) ,(caddr W₂))))
+          (find-terms body (caddr W₂)))]
+    [`(Variable ,x)
+      (if [not (equal? x (cadr W₂))]
+        `(((Variable ,x) (Variable ,(cadr W₂))))
+        '())]
+    [(cons left right)
+      (append (find-terms left (car W₂)) (find-terms right (cdr W₂)))]
+    ['() '()]))
 
 (define (antiunify-helper V₁ V₂ η)
   (cond
     [(equal? V₁ V₂) V₁]
     [else
-      (let* ([subst  (cleanup (find-term V₁ V₂))]
+      (let* ([subst  (find-terms V₁ V₂)]
              [subst₁ (caar  subst)]
              [subst₂ (cadar subst)])
 
