@@ -38,7 +38,7 @@ Theorem 1
 Every non-empty, finite set of words has a least generalization
 ⇔ any two words in the set are compatible.
 
-vLet W₁, W₂ be any two compatible words.
+Let W₁, W₂ be any two compatible words.
 
 1. Set Vᵢ to Wᵢ(i=1,2).
    Set εᵢ to ε (i=1,2).
@@ -74,7 +74,7 @@ Bibliography
 
 #lang racket
 
-(provide word→string
+(provide word->string
          print-word
          antiunify
          )
@@ -105,68 +105,72 @@ Bibliography
 ;        you wish."
 
 (define (print-word w)
-  (printf "~a\n" (word→string w)))
+  (printf "~a\n" (word->string w)))
 
-(define (word→string W)
+(define (word->string W)
   (match W
-    [`(Literal ,L ,a) (string-append L "(" (word→string a) ")")]
-    [`(Function ,f ,a)
-      (if (string? f)
-          (string-append f "(" (word→string a) ")")
-          (string-append "_" (number->string f) "(" (word→string a) ")"))]
-    [`(Variable ,z)
-      (if (string? z)
-          z
-          (string-append "_" (number->string z)))]
-    [(cons a b)
-     (if (null? b)
-         (word→string a)
-         (string-append (word→string a) ", " (word→string b)))]
+    [`(Literal ,n ,args) (string-append n "(" (word->string args) ")")]
+    [`(Function ,n ,args)
+      (if (string? n)
+          (string-append n "(" (word->string args) ")")
+          (string-append "_" (number->string n) "(" (word->string args) ")"))]
+    [`(Variable ,n)
+      (if (string? n)
+          n
+          (string-append "_" (number->string n)))]
+    [(cons a d)
+     (if (null? d)
+         (word->string a)
+         (string-append (word->string a) ", " (word->string d)))]
     ['() ""]))
 
-(define (substitute W ε₀ εₙ)
-  (match W
-    [`(Literal ,symbol ,body)
-     `(Literal ,symbol ,(substitute body ε₀ εₙ))]
-    [`(Function ,f ,body)
-     (cond
-       [(equal? ε₀ `(Function ,f ,body)) εₙ]
-       [else `(Function ,f ,(substitute body ε₀ εₙ))])]
-    [`(Variable ,x)
-     (cond
-      [(equal? ε₀ `(Variable ,x)) εₙ]
-      [else `(Variable ,x)])]
+(define (substitute V₁ V₂ ε ℕ)
+  (match V₁
+    [`(Literal ,n ,args)
+     `(Literal ,n ,(substitute args (caddr V₂) ε ℕ))]
+    [`(Function ,n ,args)
+      (cond
+        [(and (equal? V₁ ε)
+              (not (equal? V₁ V₂)))
+        `(Variable ,ℕ)]
+        [else `(Function ,n ,(substitute args (caddr V₂) ε ℕ))])]
+    [`(Variable ,n)
+      (cond
+        [(and (equal? V₁ ε)
+              (not (equal? V₁ V₂)))
+              `(Variable ,ℕ)]
+        [else V₁])]
     [(cons a b)
-     (cons (substitute a ε₀ εₙ) (substitute b ε₀ εₙ))]
+      (cons (substitute a (car V₂) ε ℕ) (substitute b (cdr V₂) ε ℕ))]
     ['() '()]))
 
 (define (find-terms W₁ W₂)
   (match W₁
-    [`(Literal  ,x ,body) (find-terms body (caddr W₂))]
-    [`(Function ,f ,body)
-      (if [and (not (equal? f (cadr W₂))) (equal? body (caddr W₂))]
-          `(((Function ,f ,body) (Function ,(cadr W₂) ,(caddr W₂))))
-          (find-terms body (caddr W₂)))]
-    [`(Variable ,x)
-      (if [not (equal? x (cadr W₂))]
-        `(((Variable ,x) (Variable ,(cadr W₂))))
+    [`(Literal  ,n ,args) (find-terms args (caddr W₂))]
+    [`(Function ,n ,args)
+      (if [and (not (equal? n (cadr W₂))) (equal? args (caddr W₂))]
+          `(((Function ,n ,args) (Function ,(cadr W₂) ,(caddr W₂))))
+          (find-terms args (caddr W₂)))]
+    [`(Variable ,n)
+      (if [not (equal? n (cadr W₂))]
+        `(((Variable ,n) (Variable ,(cadr W₂))))
         '())]
-    [(cons left right)
-      (append (find-terms left (car W₂)) (find-terms right (cdr W₂)))]
+    [(cons a d)
+      (append (find-terms a (car W₂)) (find-terms d (cdr W₂)))]
     ['() '()]))
 
-(define (antiunify-helper V₁ V₂ η)
+(define (antiunify-helper V₁ V₂ ℕ)
   (cond
     [(equal? V₁ V₂) V₁]
     [else
-      (let* ([subst  (find-terms V₁ V₂)]
-             [subst₁ (caar  subst)]
-             [subst₂ (cadar subst)])
+      (let ((subst  (find-terms V₁ V₂)))
+      (let ((subst₁ (caar subst)))
+      (let ((subst₂ (cadar subst)))
 
-             (antiunify-helper
-               (substitute V₁ subst₁ `(Variable ,η))
-               (substitute V₂ subst₂ `(Variable ,η))
-               (add1 η)))]))
+      (antiunify-helper
+        (substitute V₁ V₂ subst₁ ℕ)
+        (substitute V₂ V₁ subst₂ ℕ)
+        (add1 ℕ)))))]))
 
-(define (antiunify V₁ V₂)
-  (antiunify-helper V₁ V₂ 0))
+(define (antiunify W₁ W₂)
+  (antiunify-helper W₁ W₂ 0))

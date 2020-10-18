@@ -9,8 +9,8 @@
   '(Literal "P" ((Function "f"
                            ((Function "a" ())
                             (Function "g" (Variable "y"))))
-                 (Variable "m")
-                 (Function "g" (Variable "y"))
+                 (Variable "x")
+                 (Function "g" ((Variable "y")))
                  )))
 
 ; P(h(a(), g(x)), m, g(x))
@@ -18,8 +18,8 @@
   '(Literal "P" ((Function "h"
                            ((Function "a" ())
                             (Function "g" (Variable "x"))))
-                 (Variable "m")
-                 (Function "g" (Variable "x"))
+                 (Variable "x")
+                 (Function "g" ((Variable "x")))
                  )))
 
 (define (main)
