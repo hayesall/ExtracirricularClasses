@@ -1,6 +1,6 @@
-DataScience/* linguist-vendored=true
-MLwithTensorFlow/* linguist-vendored=true
-MITx6.00.1x/* linguist-vendored=true
+ML-DataScience/DataScience/* linguist-vendored=true
+ML-DataScience/MLwithTensorFlow/* linguist-vendored=true
+Python/MITx6.00.1x/* linguist-vendored=true
 SemanticWeb/Gemfile linguist-vendored=true
 SemanticWeb/Gemfile.lock linguist-vendored=true
 SemanticWeb/_includes/*.liquid linguist-vendored=true
