@@ -12,19 +12,27 @@ from tensorflow.keras.layers import Dense
 
 
 def split_sequence(sequence, n_steps):
-	X, y = list(), list()
-	for i in range(len(sequence)):
-		end_ix = i + n_steps
-		if end_ix > len(sequence)-1:
-			break
-		seq_x, seq_y = sequence[i:end_ix], sequence[end_ix]
-		X.append(seq_x)
-		y.append(seq_y)
-	return np.array(X), np.array(y)
+    X, y = list(), list()
+    for i in range(len(sequence)):
+        end_ix = i + n_steps
+        if end_ix > len(sequence) - 1:
+            break
+        seq_x, seq_y = sequence[i:end_ix], sequence[end_ix]
+        X.append(seq_x)
+        y.append(seq_y)
+    return np.array(X), np.array(y)
+
 
 def get_model(n_steps, n_features):
     model = Sequential()
-    model.add(LSTM(50, activation="relu", return_sequences=True, input_shape=(n_steps, n_features)))
+    model.add(
+        LSTM(
+            50,
+            activation="relu",
+            return_sequences=True,
+            input_shape=(n_steps, n_features),
+        )
+    )
     model.add(LSTM(50, activation="relu"))
     model.add(Dense(1))
     model.compile(optimizer="adam", loss="mse")
