@@ -12,9 +12,9 @@ Implementations from the "*Think Julia*" book.
 1. [The Way of the Program](01-the-way-of-the-program/)
 2. [Variables, Expressions, and Statements](02-variables-expressions-and-statements/)
 3. [Functions](03-functions/)
-4. Case Study: Interface Design
-5. Conditionals and Recursion
-6. Fruitful Functions
+4. [Case Study: Interface Design](04-case-study-interface-design/)
+5. [Conditionals and Recursion](05-conditionals-and-recursion/)
+6. [Fruitful Functions](06-fruitful-functions/)
 7. Iteration
 8. Strings
 9. Case Study: Word Play

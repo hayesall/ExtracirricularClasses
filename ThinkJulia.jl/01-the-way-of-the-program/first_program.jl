@@ -1,4 +1,5 @@
 # Copyright © 2019 Alexander L. Hayes
+# Copyright © 2019 Ben Lauwens & Allen B. Downey
 
 @doc raw"""
 Traditionally, the first program you write in a new language is called

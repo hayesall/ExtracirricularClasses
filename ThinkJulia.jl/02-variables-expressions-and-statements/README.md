@@ -1,5 +1,13 @@
 # [Chapter 2: Variables, Expressions, and Statements](https://benlauwens.github.io/ThinkJulia.jl/latest/book.html#chap02)
 
+## Getting Started
+
+If necessary, install packages:
+
+```bash
+julia packages.jl
+```
+
 ## Exercises
 
 Code is contained in the `src/` directory. All exercises are implemented as a
@@ -7,8 +15,8 @@ Julia module (`src/Exercises.jl`) which may be ran as a main script for
 demonstration (`src/main.jl`) and tested for correctness (`src/tests.jl`).
 
 ```bash
-$ cd src/
-$ julia --color=yes tests.jl
+cd src/
+julia --color=yes tests.jl
 ```
 
 ## Documentation
@@ -26,7 +34,7 @@ Install Documenter:
 Build the page:
 
 ```bash
-$ cd docs/
-$ julia --color=yes make.jl
-$ open -a "Firefox" build/index.html
+cd docs/
+julia --color=yes make.jl
+open -a "Firefox" build/index.html
 ```
