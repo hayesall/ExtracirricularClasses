@@ -15,9 +15,9 @@ Implementations from the "*Think Julia*" book.
 4. [Case Study: Interface Design](04-case-study-interface-design/)
 5. [Conditionals and Recursion](05-conditionals-and-recursion/)
 6. [Fruitful Functions](06-fruitful-functions/)
-7. Iteration
-8. Strings
-9. Case Study: Word Play
+7. [Iteration](07-iteration/)
+8. [Strings](08-strings/)
+9. [Case Study: Word Play](09-case-study-word-play/)
 10. Arrays
 11. Dictionaries
 12. Tuples
