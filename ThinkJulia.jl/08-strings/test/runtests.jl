@@ -5,6 +5,15 @@ module Exercise07Tests
     using Test
     using Exercises08
 
+    @testset "Reversed newlines" begin
+        @test exercise_8_1("ab") == "b\na\n"
+        @test exercise_8_1("abc") == "c\nb\na\n"
+    end
+
+    @testset "Ducks" begin
+        @test exercise_8_2() == "Jack\nKack\nLack\nMack\nNack\nOuack\nPack\nQuack\n"
+    end
+
     @testset "Find Characters" begin
         @test exercise_8_4("Hello", 'e', 1) == 2
         @test exercise_8_4("Hello", 'e', 2) == 2
@@ -22,10 +31,11 @@ module Exercise07Tests
     end
 
     @testset "Reverse" begin
-        @test exercise_8_6("stop", "pots") == true
-        @test exercise_8_6("asdfe", "efdsa") == true
-        @test exercise_8_6("racecar", "racecar") == true
-        @test exercise_8_6("hello", "world") == false
+        @test !exercise_8_6("too-long", "even-longer")
+        @test !exercise_8_6("hello", "world")
+        @test exercise_8_6("stop", "pots")
+        @test exercise_8_6("asdfe", "efdsa")
+        @test exercise_8_6("racecar", "racecar")
     end
 
     @testset "Built-in Counter" begin

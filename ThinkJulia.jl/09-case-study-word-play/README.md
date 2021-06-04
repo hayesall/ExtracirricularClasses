@@ -1,4 +1,4 @@
-# [Chapter 8: Strings](https://benlauwens.github.io/ThinkJulia.jl/latest/book.html#chap08)
+# [Chapter 9: Case Study - Word Play](https://benlauwens.github.io/ThinkJulia.jl/latest/book.html#chap09)
 
 ## Getting Started
 
@@ -19,11 +19,11 @@ Run unit tests:
 ```julia
 julia> using LocalCoverage
 
-julia> using Exercises08
+julia> using Exercises09
 
-julia> generate_coverage("Exercises08")
+julia> generate_coverage("Exercises09")
 
-julia> open_coverage("Exercises08")
+julia> open_coverage("Exercises09")
 ```
 
 ### Documentation

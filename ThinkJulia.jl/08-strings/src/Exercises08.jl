@@ -27,9 +27,11 @@ module Exercises08
     ```
     """
     function exercise_8_1(input_string::String)
+        output = ""
         for ind in length(input_string):-1:1
-            println(input_string[ind])
+            output = output * input_string[ind] * "\n"
         end
+        output
     end
 
     """
@@ -44,15 +46,17 @@ module Exercises08
     Using `prefixes = "JKLMNOPQ"` and `suffix = "ack"`, print the names of the ducklings.
     """
     function exercise_8_2()
+        output = ""
         prefixes = "JKLMNOPQ"
         suffix = "ack"
         for letter in prefixes
             if letter in ['O' 'Q']
-                println(letter * "u" * suffix)
+                output = output * letter * "u" * suffix * "\n"
             else
-                println(letter * suffix)
+                output = output * letter * suffix * "\n"
             end
         end
+        output
     end
 
     """
