@@ -5,6 +5,7 @@ export justifyright;
 export dotwice;
 export dofour;
 export returngrid;
+export justifygridright;
 
     """
         justifyright(s)
@@ -64,5 +65,23 @@ export returngrid;
             end
 
         return build_grid(number_rows, number_cols)
+    end
+
+    """
+        justifygridright(number_rows, number_cols)
+
+    Return the grid justified to the right. `number_cols` cannot be greater
+    than 6, or else the justification is poorly specified.
+    """
+    function justifygridright(number_rows, number_cols)
+        # We cannot justify columns correctly if there are more than 6.
+        @assert number_cols <= 6
+
+        result = ""
+        for row ∈ split(returngrid(number_cols, number_cols), "\n")
+            result *= justifyright(row)
+            result *= "\n"
+        end
+        return result
     end
 end

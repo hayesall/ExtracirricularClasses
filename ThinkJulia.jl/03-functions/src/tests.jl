@@ -35,6 +35,12 @@ function TestRunner()
             @test Exercises.returngrid(10, 11) == read("test_files/10x11.txt", String)
             @test Exercises.returngrid(4, 4) == read("test_files/4x4.txt", String)
         end
+
+        @testset "Bonus Exercise" begin
+            @test Exercises.justifygridright(4, 4) == read("test_files/4x4-right.txt", String)
+            @test Exercises.justifygridright(1, 6) == read("test_files/1x6-right.txt", String)
+            @test Exercises.justifygridright(10, 6) == read("test_files/10x6-right.txt", String)
+        end
     end
 end
 

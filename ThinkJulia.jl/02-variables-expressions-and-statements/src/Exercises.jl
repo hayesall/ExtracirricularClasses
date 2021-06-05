@@ -1,4 +1,5 @@
 # Copyright © 2019 Alexander L. Hayes
+# Copyright © 2019 Ben Lauwens & Allen B. Downey
 
 module Exercises
 export exercise_2_1

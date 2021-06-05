@@ -109,9 +109,16 @@ returngrid(number_rows, number_cols)
 
 ## Bonus Question:
 
-How would you adapt your `rightjustify` and `returngrid` to work together?
+Write a function `justifygridright` that uses `returngrid` and `justifyright`.
 
-Implement your solution.
+```@docs
+justifygridright(number_rows, number_cols)
+```
+
+### Alternative Solution with Function Composition
+
+How would you modify the implementation of `justifyright` to handle inputs
+with multiple lines?
 
 ```julia
 julia> print(rightjustify(returngrid(2, 2)))
