@@ -153,7 +153,7 @@ module Exercises06
     Task
     ----
 
-    The Ackerman function, ``A(m,n)``, is defined:
+    The Ackermann function, ``A(m,n)``, is defined:
 
     ```math
     A(m, n) = \\begin{cases}

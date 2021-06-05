@@ -18,8 +18,8 @@ Implementations from the "*Think Julia*" book.
 7. [Iteration](07-iteration/)
 8. [Strings](08-strings/)
 9. [Case Study: Word Play](09-case-study-word-play/)
-10. Arrays
-11. Dictionaries
+10. [Arrays](10-arrays/)
+11. [Dictionaries](11-dictionaries/)
 12. Tuples
 13. Case Study: Data Structure Selection
 14. Files
