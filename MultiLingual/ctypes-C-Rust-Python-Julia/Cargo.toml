@@ -1,0 +1,10 @@
+[package]
+name = "rust-ffi"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+
+[lib]
+name = "rustmeanffi"
+crate-type = ["dylib"]
