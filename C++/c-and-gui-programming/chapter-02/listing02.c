@@ -1,3 +1,7 @@
+// Copyright 2019 Simon Long
+// "Introduction to C and GUI Programming"
+// License: CC BY-NC-SA 3.0
+
 #include <stdio.h>
 
 int main(void)

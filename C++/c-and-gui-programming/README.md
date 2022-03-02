@@ -10,6 +10,14 @@
 4. More advanced control flow
 5. Pointers
 6. Functions
+7. Arrays and strings
+8. The string library
+9. User input
+10. File input and output
+11. More about types and variables
+12. Header files and the preprocessor
+13. Introduction to GTK
+14. Your first GTK program
 
 ---
 
