@@ -66,6 +66,7 @@ pub fn random_string(_val: u64) -> String {
     let rand_string: String = thread_rng()
         .sample_iter(&Alphanumeric)
         .take(_val.try_into().unwrap())
+        .map(char::from)
         .collect();
 
     return rand_string;
