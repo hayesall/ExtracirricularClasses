@@ -5,4 +5,4 @@ authors = ["Alexander L. Hayes (hayesall) <alexander@batflyer.net>"]
 edition = "2018"
 
 [dependencies]
-rand = "0.6.5"
+rand = "0.8.5"

@@ -16,7 +16,7 @@ use std::process::exit;
 fn main() {
     title_menu();
 
-    let _secret_number = rand::thread_rng().gen_range(1, 101);
+    let _secret_number = rand::thread_rng().gen_range(1..101);
 
     loop {
         // Input from user.
