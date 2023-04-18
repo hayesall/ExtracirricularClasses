@@ -1,0 +1,17 @@
+{
+  "name": "tailwind-markdown-cms",
+  "version": "1.0.0",
+  "description": "Taking notes w.r.t. tailwindcss and typography.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexander L. Hayes",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.3.1"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.9"
+  }
+}
