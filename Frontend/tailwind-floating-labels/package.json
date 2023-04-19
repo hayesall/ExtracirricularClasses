@@ -1,0 +1,17 @@
+{
+  "name": "tailwind-floating-labels-sample",
+  "version": "1.0.0",
+  "description": "Taking notes w.r.t. tailwind floating labels",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hayesall",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.3.1"
+  }
+}
